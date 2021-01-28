@@ -17,6 +17,9 @@ class Country(models.Model):
   name = models.CharField(max_length = 255)
   alpha_two_code = models.CharField(max_length = 2, blank=True, null=True)
 
+  class Meta:
+        verbose_name_plural = 'Countries'
+
   def __str__(self):
       return self.name
 
@@ -37,11 +40,11 @@ class ShopBranch(models.Model):
   opening_time = models.TimeField()
   closing_time = models.TimeField()
 
+  class Meta:
+        verbose_name_plural = 'Shop Branches'
+
   def __str__(self):
       return self.shop.name
-
-def __str__(self):
-    return self.shop.name
 
 # model to handle the relationship between a User and
 # a particular branch for authorization
@@ -61,3 +64,4 @@ class UserBranch(models.Model):
 
   class Meta:
     unique_together = ['user', 'branch']
+    verbose_name_plural = 'User Branches'
