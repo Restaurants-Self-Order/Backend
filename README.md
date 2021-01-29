@@ -5,7 +5,7 @@ REST API for Resturant-Self-Order.
 ## Project Setup
 
 Follow the steps below to set up the project on your environment. If you run into any problems, feel free to leave a 
-GitHub Issue or reach out to any of our communities above.
+GitHub Issue or reach out @Hussu or @Sazid Ahmed on slack.
 
 Activate Your Virtual Environment.
 
