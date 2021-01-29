@@ -30,7 +30,7 @@ class User(AbstractUser):
   email = models.EmailField(verbose_name='email', unique=True, max_length=255)
   phone = models.CharField(null=True, max_length=50)
   country = models.ForeignKey(Country, on_delete=models.DO_NOTHING, blank=True, null=True)
-  user_type = models.ForeignKey(UserType, on_delete=models.DO_NOTHING, default=4)
+  user_type = models.ForeignKey(UserType, on_delete=models.DO_NOTHING, blank=True, null=True)
   gender = models.CharField(
         max_length=1,
         choices=GenderChoices,
