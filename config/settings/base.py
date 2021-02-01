@@ -30,9 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'djoser',
-    'v1.core',
+    'v1.user',
     'v1.shop',
     'v1.item',
+    'v1.category',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -90,7 +91,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

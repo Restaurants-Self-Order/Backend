@@ -1,15 +1,8 @@
 from django.db import models
 from django.conf import settings
 from v1.shop.models import Shop, ShopBranch
-from v1.core.models import User
-
-# Food Category model
-class Category(models.Model):
-  branch = models.ForeignKey(ShopBranch, on_delete=models.CASCADE)
-  name = models.CharField(max_length=255)
-      
-  def __str__(self):
-    return self.name
+from v1.user.models import User
+from v1.category.models import Category
 
 # Food Item model
 class Item(models.Model):
