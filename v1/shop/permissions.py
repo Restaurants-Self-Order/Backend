@@ -19,7 +19,7 @@ class ShopBranchCreate(BasePermission):
 
     def has_permission(self, request, view):
         flag = False
-        if request.data:
+        if request.data.get('shop'):
             if Shop.objects.get(id=request.data['shop']).owner == request.user:
                 flag = True
         return (request.user and request.user.is_authenticated) and flag

@@ -8,22 +8,24 @@ class CategoryCreate(BasePermission):
 
     def has_permission(self, request, view):
         flag = False
-        try:
+        if request.data.get('branch'):
             if UserBranch.objects.filter(user=request.user, branch=request.data['branch']).exists():
                 permission = UserBranch.objects.get(user=request.user, branch=request.data['branch']).permission
                 if permission == 1 or permission == 2 or permission == 3:
                     flag = True
             if Shop.objects.filter(shopbranch=request.data['branch'], owner= request.user).exists():
                 flag = True
-        except:
-            pass
         return (request.user and request.user.is_authenticated) and flag
         
 class CategoryEditDelete(BasePermission):
 
     def has_permission(self, request, view):
-        return (request.user and request.user.is_authenticated) 
-
-    def has_object_permission(self, request, view, obj):
-        """Object level permission, allow editing self"""
-        return self.has_permission(request, view) and request.user == obj.owner
+        flag = False 
+        if request.data.get('branch'):
+            if UserBranch.objects.filter(user=request.user, branch=request.data['branch']).exists():
+                permission = UserBranch.objects.get(user=request.user, branch=request.data['branch']).permission
+                if permission == 2 or permission == 3:
+                    flag = True
+            if Shop.objects.filter(shopbranch=request.data['branch'], owner= request.user).exists():
+                flag = True
+        return (request.user and request.user.is_authenticated)  and flag

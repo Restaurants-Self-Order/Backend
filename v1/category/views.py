@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .models import Category
 from .serializers import CategorySerializer
@@ -17,4 +18,4 @@ class CategoryViewSet(viewsets.ModelViewSet):
         elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
             return [CategoryEditDelete(), ] 
         else :
-            return [CategoryEditDelete(), ] 
+            return [AllowAny(), ] 
