@@ -1,19 +1,10 @@
 # DRF imports
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework import generics
-from rest_framework import mixins
+from rest_framework import viewsets
 
 # Serializer Class imports
 from .serializers import ShopSerializer, ShopBranchSerializer
 from .models import Shop, ShopBranch, UserBranch
-
-from rest_framework import viewsets
-from rest_framework.generics import GenericAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
-
 from .permissions import ShopEditDelete, ShopBranchCreate, ShopBranchUpdate, ShopBranchDelete
 
 class ShopViewSet(viewsets.ModelViewSet):
