@@ -44,7 +44,7 @@ class ShopBranch(models.Model):
         verbose_name_plural = 'Shop Branches'
 
   def __str__(self):
-      return self.shop.name
+      return self.shop.name + ": " + self.city
 
 # model to handle the relationship between a User and
 # a particular branch for authorization
