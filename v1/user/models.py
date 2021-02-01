@@ -1,11 +1,13 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.conf import settings
 from django.dispatch import receiver
 from v1.third_party.django.contrib.auth.managers import CustomUserManager
-import uuid
 
 class Country(models.Model):
+  uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
   name = models.CharField(max_length = 50)
   alpha_two_code = models.CharField(max_length = 2)
 
@@ -16,12 +18,14 @@ class Country(models.Model):
 # changed the username field to email since we will use email for authentication 
 # and registration
 class UserType(models.Model):
-    name = models.CharField(max_length=16)
+  uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+  name = models.CharField(max_length=16)
 
-    def __str__(self):
-        return self.name
+  def __str__(self):
+      return self.name
 
 class User(AbstractUser):
+  uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
   GenderChoices = [
     ('M', 'Male'),
     ('F', 'Female'),
