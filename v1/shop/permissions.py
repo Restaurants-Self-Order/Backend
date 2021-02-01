@@ -18,7 +18,6 @@ class ShopEditDelete(BasePermission):
 class ShopBranchCreate(BasePermission):
 
     def has_permission(self, request, view):
-        print(request.data)
         flag = False
         if request.data:
             if Shop.objects.get(id=request.data['shop']).owner == request.user:
