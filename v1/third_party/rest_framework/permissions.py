@@ -8,3 +8,9 @@ class IsStaffOrReadOnly(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return self.has_permission(request, view)
+
+class IsStaff(BasePermission):
+    """The request has only permission to be used by the staff """
+
+    def has_permission(self, request, view):
+        return (request.user and request.user.is_staff) and request.method != 'DELETE'
