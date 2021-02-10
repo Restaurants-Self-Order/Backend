@@ -13,10 +13,15 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name='Partner',
             fields=[
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=255)),
+                ('title', models.CharField(max_length=255)),
+                ('address', models.CharField(max_length=255)),
+                ('first_name', models.CharField(max_length=255)),
+                ('last_name', models.CharField(max_length=255)),
+                ('email', models.EmailField(max_length=254)),
+                ('phone', models.CharField(max_length=100)),
             ],
         ),
     ]

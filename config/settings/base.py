@@ -6,9 +6,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '0s-b^agz!&i1$oiq01cc4(-u_12h-cch%wzy-^yfp)#+)zu$6('
 
@@ -34,6 +31,7 @@ INSTALLED_APPS = [
     'v1.shop',
     'v1.item',
     'v1.category',
+    'v1.partner',
 ]
 
 AUTHENTICATION_BACKENDS = [
