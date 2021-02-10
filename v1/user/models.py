@@ -25,7 +25,6 @@ class UserType(models.Model):
       return self.name
 
 class User(AbstractUser):
-  uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
   GenderChoices = [
     ('M', 'Male'),
     ('F', 'Female'),
