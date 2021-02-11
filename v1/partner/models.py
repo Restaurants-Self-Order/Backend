@@ -5,8 +5,8 @@ from django.conf import settings
 from v1.shop.models import Shop, ShopBranch
 from v1.user.models import User
 
-# Food Category model
-class Partner(models.Model): 
+# Partner model
+class Partner(models.Model):
   STATUS_CHOICES = [
     (0, 'New'),
     (1, 'Documents Requested'),

@@ -1,9 +1,10 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 
 from .models import Category
 from .serializers import CategorySerializer
 from .permissions import CategoryCreate, CategoryEditDelete
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -14,8 +15,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action == 'create':
-            return [CategoryCreate(), ] 
+            return [CategoryCreate(), ]
         elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
-            return [CategoryEditDelete(), ] 
-        else :
-            return [AllowAny(), ] 
+            return [CategoryEditDelete(), ]
+        else:
+            return [AllowAny(), ]

@@ -17,5 +17,3 @@ router.registry.extend(shop_router.registry)
 router.registry.extend(category_router.registry)
 router.registry.extend(partner_router.registry)
 urlpatterns += router.urls
-#urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-#urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
