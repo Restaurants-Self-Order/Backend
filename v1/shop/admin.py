@@ -7,4 +7,3 @@ admin.site.register(ShopType)
 admin.site.register(ShopBranch)
 admin.site.register(Country)
 admin.site.register(UserBranch)
-

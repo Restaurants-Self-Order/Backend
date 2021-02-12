@@ -4,37 +4,39 @@ from rest_framework import viewsets
 
 # Serializer Class imports
 from .serializers import ShopSerializer, ShopBranchSerializer
-from .models import Shop, ShopBranch, UserBranch
+from .models import Shop, ShopBranch
 from .permissions import ShopEditDelete, ShopBranchCreate, ShopBranchUpdate, ShopBranchDelete
 
+
 class ShopViewSet(viewsets.ModelViewSet):
-  queryset = Shop.objects.all()
-  serializer_class = ShopSerializer
+    queryset = Shop.objects.all()
+    serializer_class = ShopSerializer
 
-  def perform_create(self, serializer):
-    serializer.save(owner=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
-  def get_permissions(self):
-    if self.action == 'create':
-        return [IsAuthenticated(), ] 
-    elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
-        return [ShopEditDelete(), ] 
-    else :
-        return [AllowAny(), ] 
+    def get_permissions(self):
+        if self.action == 'create':
+            return [IsAuthenticated(), ]
+        elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            return [ShopEditDelete(), ]
+        else:
+            return [AllowAny(), ]
+
 
 class BranchViewSet(viewsets.ModelViewSet):
-  queryset = ShopBranch.objects.all()
-  serializer_class = ShopBranchSerializer
+    queryset = ShopBranch.objects.all()
+    serializer_class = ShopBranchSerializer
 
-  def get_permissions(self):
-    if self.action == 'create':
-        return [ShopBranchCreate(), ] 
-    elif self.action == 'update' or self.action == 'partial_update':
-        return [ShopBranchUpdate(), ] 
-    elif self.action == 'destroy':
-        return [ShopBranchDelete(), ] 
-    else :
-        return [AllowAny(), ] 
+    def get_permissions(self):
+        if self.action == 'create':
+            return [ShopBranchCreate(), ]
+        elif self.action == 'update' or self.action == 'partial_update':
+            return [ShopBranchUpdate(), ]
+        elif self.action == 'destroy':
+            return [ShopBranchDelete(), ]
+        else:
+            return [AllowAny(), ]
 
 
 # Modified Codebase with ModelViewSet instead of writing every viewset and specifying the urls of the viewset
@@ -60,8 +62,8 @@ class BranchViewSet(viewsets.ModelViewSet):
 #     queryset = Shop.objects.all()
 #     serializer_class = ShopSerializer
 #     permission_classes = [ShopEditDelete]
-  
-# # branch create view  
+
+# branch create view
 # class BranchCreateAPIView(CreateAPIView, GenericAPIView):
 #   serializer_class = ShopBranchSerializer
 #   permission_classes = [ShopBranchCreate]
