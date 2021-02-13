@@ -1,10 +1,12 @@
+# flake8: noqa
 from django.apps import apps
 from django.contrib.auth.hashers import make_password
 from django.contrib import auth
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import BaseUserManager
+
 
 # CustomUserManager extended from BaseUserManager
-# removed the username field from create_user function since 
+# removed the username field from create_user function since
 # no email should be required to create user and superuser
 class CustomUserManager(BaseUserManager):
     use_in_migrations = True

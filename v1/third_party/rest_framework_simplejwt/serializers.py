@@ -2,7 +2,6 @@ import importlib
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
-from django.utils.translation import gettext_lazy as _
 from rest_framework import exceptions, serializers
 
 from .settings import api_settings
@@ -55,7 +54,7 @@ class TokenObtainSerializer(serializers.Serializer):
                 raise exceptions.AuthenticationFailed(
                     self.error_messages['invalid_credentials'],
                     'invalid_credentials',
-                    )
+                )
             else:
                 raise exceptions.AuthenticationFailed(
                     self.error_messages['inactive_account'],

@@ -141,6 +141,7 @@ def default_user_authentication_rule(user):
     # sensible backwards compatibility with older Django versions.
     return True if user is not None and user.is_active else False
 
+
 def inactive_user_authentication_rule(user):
     # Prior to Django 1.10, inactive users could be authenticated with the
     # default `ModelBackend`.  As of Django 1.10, the `ModelBackend`
