@@ -1,3 +1,4 @@
+# flake8: noqa
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.timezone import now
