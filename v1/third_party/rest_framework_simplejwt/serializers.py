@@ -53,9 +53,9 @@ class TokenObtainSerializer(serializers.Serializer):
         if not getattr(login_rule, user_eligible_for_login)(self.user):
             if not getattr(login_rule, inactive_user_flag)(self.user):
                 raise exceptions.AuthenticationFailed(
-                    self.error_messages['invalid_credentials'],
-                    'invalid_credentials',
-                    )
+            self.error_messages['invalid_credentials'],
+            'invalid_credentials',
+            )
             else:
                 raise exceptions.AuthenticationFailed(
                     self.error_messages['inactive_account'],
