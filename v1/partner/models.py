@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from v1.shop.models import Country
 
 
 # Partner model
@@ -14,12 +15,17 @@ class Partner(models.Model):
     ]
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    title = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+
+    street_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
+
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=100)
+
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
