@@ -36,47 +36,67 @@ python manage.py createsuperuser
 ## API Documentation
 ### Login
 url: http://yahyarestaurant.pythonanywhere.com/auth/jwt/create/
+
 method: post
+
 body: email, password
 
 ### SignUp
 url: http://yahyarestaurant.pythonanywhere.com/auth/users/
+
 method: post
+
 body: email, password, re_password
 
 ## User Activate
 url: http://yahyarestaurant.pythonanywhere.com/auth/users/activation/
+
 method: post
+
 body: uid, token (gets sent to the users email address)
 
 ### Partner Add
 url: http://yahyarestaurant.pythonanywhere.com/partner
+
 method: post
+
 body: name, street_address, city, first_name, last_name, email, phone, country
 
 ### Partner List
 url: http://yahyarestaurant.pythonanywhere.com/partner
+
 method: get
+
 condition: needs to be a staff account to have permission
 
 ### Partner Details
 url: http://yahyarestaurant.pythonanywhere.com/partner/{uuid}
+
 method: get
+
 condition: needs to be a staff account to have permission
 
 ### Partner Patch
 url: http://yahyarestaurant.pythonanywhere.com/partner/{uuid}
+
 method: patch
+
 condition: needs to be a staff account to have permission
+
 body: name, street_address, city, first_name, last_name, email, phone, country, status (not all fields required)
 
 ### Partner Post
 url: http://yahyarestaurant.pythonanywhere.com/partner/{uuid}
+
 method: post
+
 condition: needs to be a staff account to have permission
+
 body: name, street_address, city, first_name, last_name, email, phone, country, status (all fields required)
 
 ### Partner Delete
 url: http://yahyarestaurant.pythonanywhere.com/partner/{uuid}
+
 method: delete
+
 condition: needs to be a staff account to have permission
