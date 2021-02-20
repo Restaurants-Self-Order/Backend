@@ -48,8 +48,10 @@ method: post
 
 body: email, password, re_password
 
-## User Activate
+### User Activate
 url: http://yahyarestaurant.pythonanywhere.com/auth/users/activation/
+
+in email you'll get an link like this: http://yahyarestaurant.pythonanywhere.com/#/activate/{uid}/{token}
 
 method: post
 
