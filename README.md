@@ -44,6 +44,11 @@ url: http://yahyarestaurant.pythonanywhere.com/auth/users/
 method: post
 body: email, password, re_password
 
+## User Activate
+url: http://yahyarestaurant.pythonanywhere.com/auth/users/activation/
+method: post
+body: uid, token (gets sent to the users email address)
+
 ### Partner Add
 url: http://yahyarestaurant.pythonanywhere.com/partner
 method: post
