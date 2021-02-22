@@ -10,6 +10,12 @@ class Currency(models.Model):
     name = models.CharField(max_length=255)
     value = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Currencies'
+
 # Food Item model
 class Item(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
