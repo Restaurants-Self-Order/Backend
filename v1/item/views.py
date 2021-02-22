@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
 
 # Serializer Class imports
-from .models import Item, CustomiztionGroup, Customization_Items
+from .models import Item, CustomizationGroup, Customization_Items
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 
