@@ -1,80 +1,28 @@
-import importlib
-
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
-from rest_framework import exceptions, serializers
-
-from .settings import api_settings
-from .state import User
-from .tokens import RefreshToken, SlidingToken, UntypedToken
-
-rule_package, user_eligible_for_login = api_settings.USER_AUTHENTICATION_RULE.rsplit('.', 1)
-inactive_rule_package, inactive_user_flag = api_settings.INACTIVE_USER_AUTHENTICATION_RULE.rsplit('.', 1)
-login_rule = importlib.import_module(rule_package)
+from rest_framework_simplejwt.serializers import TokenObtainSerializer
+from rest_framework_simplejwt.exceptions import AuthenticationFailed
+from rest_framework import status
+from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
-class PasswordField(serializers.CharField):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault('style', {})
-
-        kwargs['style']['input_type'] = 'password'
-        kwargs['write_only'] = True
-
-        super().__init__(*args, **kwargs)
+class InActiveUser(AuthenticationFailed):
+    status_code = status.HTTP_406_NOT_ACCEPTABLE
+    default_detail = "User is not active, please confirm your email"
+    default_code = 'user_is_inactive'
 
 
-class TokenObtainSerializer(serializers.Serializer):
-    username_field = User.USERNAME_FIELD
+# noinspection PyAbstractClass
+class CustomTokenObtainPairSerializer(TokenObtainSerializer):
 
-    default_error_messages = {
-        'invalid_credentials': 'Invalid credentials',
-        'inactive_account': 'The account is not activated!!'
-    }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields[self.username_field] = serializers.CharField()
-        self.fields['password'] = PasswordField()
-
-    def validate(self, attrs):
-        authenticate_kwargs = {
-            self.username_field: attrs[self.username_field],
-            'password': attrs['password'],
-        }
-        try:
-            authenticate_kwargs['request'] = self.context['request']
-        except KeyError:
-            pass
-
-        self.user = authenticate(**authenticate_kwargs)
-
-        if not getattr(login_rule, user_eligible_for_login)(self.user):
-            if not getattr(login_rule, inactive_user_flag)(self.user):
-                raise exceptions.AuthenticationFailed(
-                    self.error_messages['invalid_credentials'],
-                    'invalid_credentials',
-                )
-            else:
-                raise exceptions.AuthenticationFailed(
-                    self.error_messages['inactive_account'],
-                    'inactive_account',
-                )
-
-        return {}
-
-    @classmethod
-    def get_token(cls, user):
-        raise NotImplementedError('Must implement `get_token` method for `TokenObtainSerializer` subclasses')
-
-
-class TokenObtainPairSerializer(TokenObtainSerializer):
     @classmethod
     def get_token(cls, user):
         return RefreshToken.for_user(user)
 
     def validate(self, attrs):
         data = super().validate(attrs)
+        if not self.user.is_active:
+            raise InActiveUser()
 
         refresh = self.get_token(self.user)
 
@@ -85,72 +33,3 @@ class TokenObtainPairSerializer(TokenObtainSerializer):
             update_last_login(None, self.user)
 
         return data
-
-
-class TokenObtainSlidingSerializer(TokenObtainSerializer):
-    @classmethod
-    def get_token(cls, user):
-        return SlidingToken.for_user(user)
-
-    def validate(self, attrs):
-        data = super().validate(attrs)
-
-        token = self.get_token(self.user)
-
-        data['token'] = str(token)
-
-        if api_settings.UPDATE_LAST_LOGIN:
-            update_last_login(None, self.user)
-
-        return data
-
-
-class TokenRefreshSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
-
-    def validate(self, attrs):
-        refresh = RefreshToken(attrs['refresh'])
-
-        data = {'access': str(refresh.access_token)}
-
-        if api_settings.ROTATE_REFRESH_TOKENS:
-            if api_settings.BLACKLIST_AFTER_ROTATION:
-                try:
-                    # Attempt to blacklist the given refresh token
-                    refresh.blacklist()
-                except AttributeError:
-                    # If blacklist app not installed, `blacklist` method will
-                    # not be present
-                    pass
-
-            refresh.set_jti()
-            refresh.set_exp()
-
-            data['refresh'] = str(refresh)
-
-        return data
-
-
-class TokenRefreshSlidingSerializer(serializers.Serializer):
-    token = serializers.CharField()
-
-    def validate(self, attrs):
-        token = SlidingToken(attrs['token'])
-
-        # Check that the timestamp in the "refresh_exp" claim has not
-        # passed
-        token.check_exp(api_settings.SLIDING_TOKEN_REFRESH_EXP_CLAIM)
-
-        # Update the "exp" claim
-        token.set_exp()
-
-        return {'token': str(token)}
-
-
-class TokenVerifySerializer(serializers.Serializer):
-    token = serializers.CharField()
-
-    def validate(self, attrs):
-        UntypedToken(attrs['token'])
-
-        return {}
