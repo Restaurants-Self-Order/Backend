@@ -19,18 +19,11 @@ Install required packages:
 pip3 install -r requirements.txt
 ```
 
-Copy the folders `djangorestframework_simplejwt-4.6.0.dist-info`, `djoser`, `djoser-2.1.0.dist-info`and `rest_framework_simplejwt` that are inside `v1/third_party/` to your environment install path. Windows: `\{{your_env}}\Lib\site-packages` and Linux/MacOS: `{{your_env}}/lib/{{pythonX.X}}/site-packages`
-
 Rename the `.env.example` file to `.env` and put your email and app password to the fields to send emails.
 
-Run Migrations:
+To check styling:
 ```shell
-python manage.py migrate
-```
-
-Create SuperUser:
-```shell
-python manage.py createsuperuser
+flake8 --config=.flake8 config v1
 ```
 
 ## API Documentation
