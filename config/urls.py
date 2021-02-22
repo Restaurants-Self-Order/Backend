@@ -12,10 +12,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
-
-    # Item Urls
-    path('items/', include('v1.item.urls')),
+    path('auth/', include('v1.third_party.rest_framework_simplejwt.urls')),
 ]
 
 router = DefaultRouter(trailing_slash=False)

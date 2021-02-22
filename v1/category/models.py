@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 from v1.shop.models import ShopBranch
-from v1.user.models import User
+from v1.users.models import User
 
 
 # Food Category model
