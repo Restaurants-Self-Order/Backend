@@ -5,6 +5,9 @@ from rest_framework.routers import DefaultRouter
 from v1.shop.urls import router as shop_router
 from v1.category.urls import router as category_router
 from v1.partner.urls import router as partner_router
+#for django views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
