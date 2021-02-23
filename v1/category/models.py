@@ -50,6 +50,9 @@ class MenuCategory(models.Model):
 
     def __str__(self):
         return self.category.name + " " + self.menu.name
+    
+    class Meta:
+        unique_together = ['category', 'menu']
 
 
 # Many to Many Of Item and Category
@@ -64,3 +67,6 @@ class ItemCategory(models.Model):
 
     def __str__(self):
         return self.item.name + self.category.name
+    
+    class Meta:
+        unique_together = ['category', 'item']

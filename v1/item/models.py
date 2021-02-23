@@ -80,3 +80,6 @@ class ModifierGroup(models.Model):
 
     def __str__(self):
         return self.item.name + self.customization_group.name
+
+    class Meta:
+        unique_together = ['item', 'customization_group']
