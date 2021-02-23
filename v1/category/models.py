@@ -29,7 +29,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
 
-
+# Many to Many Of Item and Category
 class ItemCategory(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -38,7 +38,7 @@ class ItemCategory(models.Model):
     def __str__(self):
         return self.item.name + self.category.name
 
-
+# Many to Many Of Menu and Category
 class MenuCategory(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
