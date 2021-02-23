@@ -34,6 +34,7 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+
 # CustomizationGroup model
 class CustomizationGroup(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
@@ -45,6 +46,7 @@ class CustomizationGroup(models.Model):
     def __str__(self):
         return self.name
 
+
 # Customization_Items
 class CustomizationItem(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
@@ -54,6 +56,7 @@ class CustomizationItem(models.Model):
 
     def __str__(self):
         return self.item.name + self.price
+
 
 # Many to many between Item and CustomizationGroup
 class ModifierGroup(models.Model):
