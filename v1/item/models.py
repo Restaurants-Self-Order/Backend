@@ -3,7 +3,6 @@ import uuid
 from django.db import models
 
 from v1.users.models import User
-from v1.category.models import Category
 
 # Currency model
 class Currency(models.Model):
@@ -26,8 +25,6 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
 
 # CustomizationGroup model
