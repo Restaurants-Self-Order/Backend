@@ -13,7 +13,6 @@ class Currency(models.Model):
 # Food Item model
 class Item(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
     price = models.IntegerField()
@@ -29,10 +28,11 @@ class Item(models.Model):
         return self.name
 
 
+
+
 # CustomizationGroup model
 class CustomizationGroup(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     required = models.BooleanField(default=False)
     min_select = models.IntegerField(default=0)
