@@ -13,7 +13,7 @@ class Menu(models.Model):
     branch = models.ForeignKey(ShopBranch, on_delete=models.CASCADE)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -27,7 +27,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     branch = models.ForeignKey(ShopBranch, on_delete=models.CASCADE)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -44,13 +44,13 @@ class MenuCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     branch = models.ForeignKey(ShopBranch, on_delete=models.CASCADE)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.category.name + " " + self.menu.name
-    
+
     class Meta:
         unique_together = ['category', 'menu']
 
@@ -61,12 +61,12 @@ class ItemCategory(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     branch = models.ForeignKey(ShopBranch, on_delete=models.CASCADE)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.item.name + self.category.name
-    
+
     class Meta:
         unique_together = ['category', 'item']

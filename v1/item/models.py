@@ -5,6 +5,7 @@ from django.db import models
 from v1.users.models import User
 from v1.shop.models import ShopBranch
 
+
 # Currency model
 class Currency(models.Model):
     name = models.CharField(max_length=255)
@@ -15,6 +16,7 @@ class Currency(models.Model):
 
     class Meta:
         verbose_name_plural = 'Currencies'
+
 
 # Food Item model
 class Item(models.Model):
@@ -28,7 +30,7 @@ class Item(models.Model):
 
     image = models.URLField(blank=True, null=True)
     prepare_time = models.IntegerField(default=0)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -47,7 +49,7 @@ class CustomizationGroup(models.Model):
     min_select = models.IntegerField(default=0)
     max_select = models.IntegerField(default=0)
     branch = models.ForeignKey(ShopBranch, on_delete=models.CASCADE)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -61,7 +63,7 @@ class CustomizationItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     customization_group = models.ForeignKey(CustomizationGroup, on_delete=models.CASCADE)
     price = models.IntegerField(default=0)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -74,7 +76,7 @@ class ModifierGroup(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     customization_group = models.ForeignKey(CustomizationGroup, on_delete=models.CASCADE)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
