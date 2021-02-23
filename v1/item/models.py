@@ -3,7 +3,6 @@ import uuid
 from django.db import models
 
 from v1.users.models import User
-from v1.category.models import Category
 
 # Currency model
 class Currency(models.Model):
@@ -13,12 +12,13 @@ class Currency(models.Model):
 # Food Item model
 class Item(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    description = models.TextField()
+
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
     price = models.IntegerField()
-    description = models.TextField()
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
+
+    image = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     prepare_time = models.IntegerField(default=0)
@@ -32,7 +32,6 @@ class Item(models.Model):
 # CustomizationGroup model
 class CustomizationGroup(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     required = models.BooleanField(default=False)
     min_select = models.IntegerField(default=0)
@@ -45,6 +44,7 @@ class CustomizationGroup(models.Model):
 class CustomizationItem(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    customization_group = models.ForeignKey(CustomizationGroup, on_delete=models.CASCADE)
     price = models.IntegerField(default=0)
 
     def __str__(self):

@@ -12,18 +12,6 @@ class ShopType(models.Model):
         return self.name
 
 
-class Shop(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    shop_type = models.ForeignKey(ShopType, on_delete=models.DO_NOTHING, blank=True, null=True)
-    name = models.CharField(max_length=255)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='uploads/shop/', blank=True, null=True)
-    is_verified = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
-
 class Country(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(max_length=255)
@@ -31,6 +19,17 @@ class Country(models.Model):
 
     class Meta:
         verbose_name_plural = 'Countries'
+
+    def __str__(self):
+        return self.name
+
+
+class Shop(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    shop_type = models.ForeignKey(ShopType, on_delete=models.DO_NOTHING, blank=True, null=True)
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='uploads/shop/', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -55,6 +54,7 @@ class ShopBranch(models.Model):
     description = models.TextField()
     opening_time = models.TimeField()
     closing_time = models.TimeField()
+    is_active = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Shop Branches'

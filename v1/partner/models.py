@@ -8,7 +8,7 @@ from v1.shop.models import Country
 class Partner(models.Model):
     STATUS_CHOICES = [
         (0, 'New'),
-        (1, 'Documents Requested'),
+        (1, 'Pending'),
         (2, 'Approved'),
         (3, 'Cancelled'),
         (4, 'Rejected'),
@@ -31,4 +31,4 @@ class Partner(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return self.name
