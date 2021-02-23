@@ -45,6 +45,7 @@ class CustomizationGroup(models.Model):
 class CustomizationItem(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    customization_group = models.ForeignKey(CustomizationGroup, on_delete=models.CASCADE)
     price = models.IntegerField(default=0)
 
     def __str__(self):
