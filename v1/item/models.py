@@ -13,10 +13,12 @@ class Currency(models.Model):
 class Item(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(max_length=255)
+    description = models.TextField()
+
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
     price = models.IntegerField()
-    description = models.TextField()
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
+
+    image = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     prepare_time = models.IntegerField(default=0)
