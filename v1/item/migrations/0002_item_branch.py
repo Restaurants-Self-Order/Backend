@@ -10,13 +10,13 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('shop', '0001_initial'),
-        ('partner', '0001_initial'),
+        ('item', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='partner',
-            name='country',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='shop.country'),
+            model_name='item',
+            name='branch',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shop.shopbranch'),
         ),
     ]
