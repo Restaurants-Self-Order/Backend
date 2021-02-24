@@ -1,24 +1,24 @@
 from rest_framework import serializers
 
-from .models import Shop, ShopBranch 
+from .models import Shop, ShopBranch
 
 from v1.category.serializers import MenuUpdateSerializer, CategoryUpdateSerializer
 
 
 class ShopBranchSerializer(serializers.ModelSerializer):
-    
+
     menu = MenuUpdateSerializer(source='menu_set', many=True, read_only=True)
     category = CategoryUpdateSerializer(source='category_set', many=True, read_only=True)
 
     class Meta:
         model = ShopBranch
-        fields = ('uuid', 'title', 'street_address', 'city', 
-        'country', 'region', 'state', 'postal_code', 'latitude', 
-        'longitude', 'description', 'opening_time', 'closing_time', 'menu', 'category')
+        fields = ('uuid', 'title', 'street_address', 'city',
+                  'country', 'region', 'state', 'postal_code', 'latitude',
+                  'longitude', 'description', 'opening_time', 'closing_time', 'menu', 'category')
 
 
 class ShopSerializer(serializers.ModelSerializer):
-    
+
     shop = ShopBranchSerializer(source='shopbranch_set', many=True, read_only=True)
 
     class Meta:

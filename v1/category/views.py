@@ -47,4 +47,4 @@ class MenuCategoryViewSet(viewsets.ModelViewSet):
         if self.action == 'create' or self.action == 'destroy':
             return [MenuCategoryPermission(), ]
         else:
-            return [IsAdminUser(),]
+            return [IsAdminUser(), ]
