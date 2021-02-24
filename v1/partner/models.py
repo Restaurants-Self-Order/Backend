@@ -7,11 +7,13 @@ from v1.shop.models import Country
 # Partner model
 class Partner(models.Model):
     STATUS_CHOICES = [
-        (0, 'New'),
-        (1, 'Pending'),
-        (2, 'Approved'),
-        (3, 'Cancelled'),
-        (4, 'Rejected'),
+        (0, 'New'),                # Application was just recieved
+        (1, 'Pending'),            # Staffs have recieved the application
+        (2, 'Waiting-Response'),   # We're waiting for the response from shop owners
+        (3, 'Triaged'),            # The application is forwarded to shop and branch creation phase
+        (4, 'Completed'),          # The shop, branch creation process is complete
+        (5, 'Cancelled'),          # The application was cancelled by owner or is a spam
+        (6, 'Rejected'),           # The application was rejected by the staff
     ]
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
