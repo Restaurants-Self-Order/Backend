@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Category, Menu
+from .models import Category, Menu, MenuCategory
 
 from v1.shop.models import ShopBranch
 
@@ -37,4 +37,12 @@ class MenuUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ('uuid', 'name', 'start_time', 'end_time', 'created_at', 'updated_at')
+        read_only_fields = 'created_at', 'updated_at'
+
+
+class MenuCategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MenuCategory
+        fields = ('__all__')
         read_only_fields = 'created_at', 'updated_at'
