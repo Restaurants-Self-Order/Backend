@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import SAFE_METHODS
 
-from .models import Category, Menu, MenuCategory, ItemCategory
+from .models import Category, Menu, MenuCategory
 from .serializers import CategoryCreateSerializer, CategoryUpdateSerializer, MenuCreateSerializer, MenuUpdateSerializer, MenuCategorySerializer
 from .permissions import ItemCreate, ItemUpdate, MenuCategoryPermission
 
@@ -37,6 +37,7 @@ class MenuViewSet(viewsets.ModelViewSet):
             return [ItemCreate(), ]
         else:
             return [ItemUpdate(), ]
+
 
 class MenuCategoryViewSet(viewsets.ModelViewSet):
     queryset = MenuCategory.objects.all()

@@ -39,6 +39,7 @@ class MenuUpdateSerializer(serializers.ModelSerializer):
         fields = ('uuid', 'name', 'start_time', 'end_time', 'created_at', 'updated_at')
         read_only_fields = 'created_at', 'updated_at'
 
+
 class MenuCategorySerializer(serializers.ModelSerializer):
 
     class Meta:

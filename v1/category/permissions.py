@@ -48,9 +48,9 @@ class MenuCategoryPermission(BasePermission):
                     user_has_perm = True
             elif Shop.objects.filter(shopbranch=request.data['branch'], owner=request.user).exists():
                 user_has_perm = True
-            
+
             if Category.objects.filter(uuid=request.data['category'], branch=request.data['branch']).exists() and \
-                Menu.objects.filter(uuid=request.data['menu'], branch=request.data['branch']).exists():
+               Menu.objects.filter(uuid=request.data['menu'], branch=request.data['branch']).exists():
                 item_in_branch = True
 
         return (request.user and request.user.is_authenticated) and user_has_perm and item_in_branch
