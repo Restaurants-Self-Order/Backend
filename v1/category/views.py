@@ -1,22 +1,39 @@
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import SAFE_METHODS
 
-from .models import Category
-from .serializers import CategorySerializer
-from .permissions import CategoryCreate, CategoryEditDelete
+from .models import Category, Menu
+from .serializers import CategoryCreateSerializer, CategoryUpdateSerializer, MenuCreateSerializer, MenuUpdateSerializer
+from .permissions import ItemCreate, ItemUpdate
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
-    serializer_class = CategorySerializer
 
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
 
+    def get_serializer_class(self):
+        if self.action == 'create' or self.request.method in SAFE_METHODS:
+            return CategoryCreateSerializer
+        return CategoryUpdateSerializer
+
     def get_permissions(self):
-        if self.action == 'create':
-            return [CategoryCreate(), ]
-        elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
-            return [CategoryEditDelete(), ]
+        if self.action == 'create' or self.request.method in SAFE_METHODS:
+            return [ItemCreate(), ]
         else:
-            return [AllowAny(), ]
+            return [ItemUpdate(), ]
+
+
+class MenuViewSet(viewsets.ModelViewSet):
+    queryset = Menu.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'create' or self.request.method in SAFE_METHODS:
+            return MenuCreateSerializer
+        return MenuUpdateSerializer
+
+    def get_permissions(self):
+        if self.action == 'create' or self.request.method in SAFE_METHODS:
+            return [ItemCreate(), ]
+        else:
+            return [ItemUpdate(), ]
