@@ -1,9 +1,9 @@
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, SAFE_METHODS
 
-from .models import Category
-from .serializers import CategorySerializer
-from .permissions import CategoryCreate, CategoryEditDelete
+from .models import Category, Menu
+from .serializers import CategorySerializer, MenuSerializer
+from .permissions import ItemCreate, ItemUpdate
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -14,9 +14,17 @@ class CategoryViewSet(viewsets.ModelViewSet):
         serializer.save(added_by=self.request.user)
 
     def get_permissions(self):
-        if self.action == 'create':
-            return [CategoryCreate(), ]
-        elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
-            return [CategoryEditDelete(), ]
+        if self.action == 'create' or self.request.method in SAFE_METHODS:
+            return [ItemCreate(), ]
         else:
-            return [AllowAny(), ]
+            return [ItemUpdate(), ]
+
+class MenuViewSet(viewsets.ModelViewSet):
+    queryset = Menu.objects.all()
+    serializer_class = MenuSerializer
+
+    def get_permissions(self):
+        if self.action == 'create' or self.request.method in SAFE_METHODS:
+            return [ItemCreate(), ]
+        else:
+            return [ItemUpdate(), ]

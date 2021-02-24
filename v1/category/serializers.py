@@ -9,8 +9,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('branch', 'name')
-        read_only_fields = 'created_at', 'updated_at'
+        fields = ('branch', 'name', 'created_at', 'updated_at')
+        read_only_fields = 'created_at', 'updated_at', 'branch'
 
 
 class MenuSerializer(serializers.ModelSerializer):
@@ -18,5 +18,5 @@ class MenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Menu
-        fields = ('name', 'start_time', 'end_time', 'branch')
-        read_only_fields = 'created_at', 'updated_at'
+        fields = ('name', 'start_time', 'end_time', 'branch', 'created_at', 'updated_at')
+        read_only_fields = 'created_at', 'updated_at', 'branch'
