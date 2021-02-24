@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, IsAdminUser
 
 from .models import Category, Menu, MenuCategory
 from .serializers import CategoryCreateSerializer, CategoryUpdateSerializer, MenuCreateSerializer, MenuUpdateSerializer, MenuCategorySerializer
@@ -44,5 +44,7 @@ class MenuCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = MenuCategorySerializer
 
     def get_permissions(self):
-        if self.action == 'create' or self.request.method in SAFE_METHODS:
+        if self.action == 'create' or self.action == 'destroy':
             return [MenuCategoryPermission(), ]
+        else:
+            return [IsAdminUser(),]

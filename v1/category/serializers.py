@@ -24,8 +24,6 @@ class CategoryUpdateSerializer(serializers.ModelSerializer):
 
 class MenuCreateSerializer(serializers.ModelSerializer):
 
-    branch = serializers.PrimaryKeyRelatedField(queryset=ShopBranch.objects.all())
-
     class Meta:
         model = Menu
         fields = ('uuid', 'name', 'start_time', 'end_time', 'branch', 'created_at', 'updated_at')
