@@ -8,6 +8,7 @@ from .models import Shop, ShopBranch, Country
 from .permissions import ShopEditDelete, ShopBranchCreate, ShopBranchUpdate, ShopBranchDelete
 
 
+#All CRUD
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
@@ -24,6 +25,7 @@ class ShopViewSet(viewsets.ModelViewSet):
             return [AllowAny(), ]
 
 
+#All CRUD
 class BranchViewSet(viewsets.ModelViewSet):
     queryset = ShopBranch.objects.all()
     serializer_class = ShopBranchSerializer
@@ -39,6 +41,7 @@ class BranchViewSet(viewsets.ModelViewSet):
             return [AllowAny(), ]
 
 
+# List Of all countries
 class CountryListView(viewsets.ModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
