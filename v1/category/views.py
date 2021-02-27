@@ -1,9 +1,10 @@
 from rest_framework import viewsets
 from rest_framework.permissions import SAFE_METHODS, IsAdminUser
 
-from .models import Category, Menu, MenuCategory
-from .serializers import CategoryCreateSerializer, CategoryUpdateSerializer, MenuCreateSerializer, MenuUpdateSerializer, MenuCategorySerializer
-from .permissions import ItemCreate, ItemUpdate, MenuCategoryPermission
+from .models import Category, Menu, MenuCategory, ItemCategory
+from .serializers import CategoryCreateSerializer, CategoryUpdateSerializer, \
+    MenuCreateSerializer, MenuUpdateSerializer, MenuCategorySerializer, ItemCategorySerializer
+from .permissions import ItemCreate, ItemUpdate, MenuCategoryPermission, ItemCategoryPermission
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -46,5 +47,18 @@ class MenuCategoryViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == 'create' or self.action == 'destroy':
             return [MenuCategoryPermission(), ]
+        else:
+            return [IsAdminUser(), ]
+
+
+class ItemCategoryViewSet(viewsets.ModelViewSet):
+    queryset = ItemCategory.objects.all()
+    serializer_class = ItemCategorySerializer
+
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [IsAdminUser() or ItemCreate(), ]
+        elif self.action == 'create' or self.action == 'destroy':
+            return [ItemCategoryPermission(), ]
         else:
             return [IsAdminUser(), ]
