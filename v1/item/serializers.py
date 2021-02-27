@@ -2,8 +2,16 @@ from rest_framework import serializers
 from .models import Item
 
 
-class ItemSerializer(serializers.ModelSerializer):
+class ItemCreateSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Item
-        fields = ['id', 'user', 'shop', 'category', 'name', 'price', 'description', 'image', 'date_added']
+        fields = ('__all__')
+        read_only_fields = 'created_at', 'updated_at'
+
+class ItemUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        fields = ('')
         read_only_fields = 'created_at', 'updated_at'
