@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Item, CustomizationGroup, CustomizationItem
+from .models import Item, CustomizationGroup, CustomizationItem, ModifierGroup
 
 
 class ItemCreateSerializer(serializers.ModelSerializer):
@@ -38,5 +38,13 @@ class CustomizationItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomizationItem
+        fields = ('__all__')
+        read_only_fields = 'created_at', 'updated_at'
+
+
+class ModifierGroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ModifierGroup
         fields = ('__all__')
         read_only_fields = 'created_at', 'updated_at'
