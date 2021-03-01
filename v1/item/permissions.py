@@ -26,7 +26,7 @@ class MenuCategoryPermission(BasePermission):
 
 
 class CustomizationItemPermission(BasePermission):
-    
+
     def has_permission(self, request, view):
         user_has_permission = False
         item_in_branch = False
@@ -34,15 +34,15 @@ class CustomizationItemPermission(BasePermission):
             if UserBranch.objects.filter(user=request.user, branch=request.data['branch']).exists():
                 permission = UserBranch.objects.get(user=request.user, branch=request.data['branch']).permission
                 if permission == 1 or permission == 2 or permission == 3:
-                    user_has_perm = True
+                    user_has_permission = True
             elif Shop.objects.filter(shopbranch=request.data['branch'], owner=request.user).exists():
-                user_has_perm = True
+                user_has_permission = True
 
             if Item.objects.filter(uuid=request.data['item'], branch=request.data['branch']).exists() and \
                CustomizationGroup.objects.filter(uuid=request.data['customization_group'], branch=request.data['branch']).exists():
                 item_in_branch = True
 
-        return (request.user and request.user.is_authenticated) and user_has_perm and item_in_branch
+        return (request.user and request.user.is_authenticated) and user_has_permission and item_in_branch
 
 
 class ModifierGroupPermission(BasePermission):

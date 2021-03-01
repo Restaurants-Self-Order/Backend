@@ -69,7 +69,7 @@ class CustomizationItem(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.item.name + self.price
+        return self.item.name + f': {self.price}'
 
 
 # Many to many between Item and CustomizationGroup

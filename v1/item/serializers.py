@@ -18,6 +18,7 @@ class ItemUpdateSerializer(serializers.ModelSerializer):
         fields = ('')
         read_only_fields = 'created_at', 'updated_at'
 
+
 class CustomizationGroupCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
