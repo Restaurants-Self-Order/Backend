@@ -5,6 +5,28 @@ from v1.shop.models import Country
 
 
 # Partner model
+class PartnerApplication(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    name = models.CharField(max_length=255)
+
+    street_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
+    number_of_branches = models.IntegerField()
+
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=100)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+# Partner model
 class Partner(models.Model):
     STATUS_CHOICES = [
         (0, 'New'),                # Application was just recieved
