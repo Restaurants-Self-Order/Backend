@@ -11,6 +11,7 @@ class ShopType(models.Model):
     def __str__(self):
         return self.name
 
+
 class Cusine(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(max_length=63)
