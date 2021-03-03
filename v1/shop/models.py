@@ -6,7 +6,15 @@ from django.conf import settings
 
 class ShopType(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=63)
+
+    def __str__(self):
+        return self.name
+
+
+class Cusine(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    name = models.CharField(max_length=63)
 
     def __str__(self):
         return self.name
