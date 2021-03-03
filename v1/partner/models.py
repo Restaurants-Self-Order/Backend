@@ -1,10 +1,10 @@
 import uuid
 
 from django.db import models
-from v1.shop.models import Country
+from v1.shop.models import Country, Cusine
 
 
-# Partner model
+# Partner Application model
 class PartnerApplication(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     name = models.CharField(max_length=255)
@@ -13,6 +13,7 @@ class PartnerApplication(models.Model):
     city = models.CharField(max_length=255)
     country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
     number_of_branches = models.IntegerField()
+    cusine = models.ForeignKey(Cusine, on_delete=models.CASCADE)
 
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
