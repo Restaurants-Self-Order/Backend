@@ -51,7 +51,7 @@ class Partner(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=100)
 
-    street_address = models.CharField(max_length=255)
+    detailed_address = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
