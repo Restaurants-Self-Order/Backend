@@ -3,28 +3,6 @@ import uuid
 from django.db import models
 from v1.shop.models import Country, Cusine
 
-# Partner model
-class Partner(models.Model):
-    
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField()
-    phone = models.CharField(max_length=100)
-
-    detailed_address = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
-
-    shop_name = models.CharField(max_length=255)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
 # Partner Application model
 class PartnerApplication(models.Model):
 
@@ -62,4 +40,26 @@ class PartnerApplication(models.Model):
     def __str__(self):
         return self.name
 
+
+# Partner model
+class Partner(models.Model):
+    
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=100)
+
+    detailed_address = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
+
+    shop_name = models.CharField(max_length=255)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
