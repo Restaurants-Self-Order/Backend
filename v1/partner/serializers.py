@@ -16,6 +16,5 @@ class PartnerApplicationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PartnerApplication
-        fields = ('uuid', 'name', 'street_address', 'city', 'country', 'first_name',
-                  'last_name', 'email', 'phone', 'cusine', 'created_at', 'updated_at')
+        fields = ('uuid','first_name', 'last_name', 'email', 'phone', 'designation', 'street_address', 'state', 'city', 'country', 'shop_name', 'number_of_branches', 'cusine', 'created_at', 'updated_at')
         read_only_fields = 'created_at', 'updated_at'
