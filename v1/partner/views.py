@@ -23,6 +23,7 @@ class PartnerApplicationViewSet(viewsets.ModelViewSet):
             return [IsStaff(), ]
 
     def get_serializer_class(self):
+        print(self.request.data)
         if self.request.method == 'create':
             return PartnerApplicationCreateSerializer
         else:

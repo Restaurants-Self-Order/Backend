@@ -1,11 +1,22 @@
 # DRF imports
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, SAFE_METHODS
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
 
 # Serializer Class imports
-from .serializers import ShopSerializer, ShopBranchSerializer, CountrySerializer
-from .models import Shop, ShopBranch, Country
+from .serializers import ShopSerializer, ShopBranchSerializer, CountrySerializer, CusineSerializer
+from .models import Shop, ShopBranch, Country, Cusine
 from .permissions import ShopEditDelete, ShopBranchCreate, ShopBranchUpdate, ShopBranchDelete
+
+
+# List Of all countries
+class CountryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
+
+
+class CusineViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Cusine.objects.all()
+    serializer_class = CusineSerializer
 
 
 # All CRUD
@@ -39,18 +50,6 @@ class BranchViewSet(viewsets.ModelViewSet):
             return [ShopBranchDelete(), ]
         else:
             return [AllowAny(), ]
-
-
-# List Of all countries
-class CountryListView(viewsets.ModelViewSet):
-    queryset = Country.objects.all()
-    serializer_class = CountrySerializer
-
-    def get_permissions(self):
-        if self.request.method in SAFE_METHODS:
-            return [AllowAny(), ]
-        else:
-            return [IsAdminUser(), ]
 
 # Modified Codebase with ModelViewSet instead of writing every viewset and specifying the urls of the viewset
 
