@@ -18,7 +18,7 @@ class PartnerApplication(models.Model):
     ]
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    
+
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField()
@@ -39,12 +39,12 @@ class PartnerApplication(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.shop_name
 
 
 # Partner model
 class Partner(models.Model):
-    
+
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

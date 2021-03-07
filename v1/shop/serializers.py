@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Shop, ShopBranch, Country
+from .models import Shop, ShopBranch, Country, Cusine
 
 from v1.category.serializers import MenuUpdateSerializer, CategoryUpdateSerializer
 
@@ -30,4 +30,11 @@ class CountrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Country
-        fields = ('uuid', 'name', 'alpha_two_code')
+        fields = ('__all__')
+
+
+class CusineSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Cusine
+        fields = ('__all__')
