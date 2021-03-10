@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny
 from v1.third_party.rest_framework.permissions import IsStaff
 
 from .models import Partner, PartnerApplication
-from .serializers import PartnerSerializer, PartnerApplicationSerializer
+from .serializers import PartnerSerializer, PartnerApplicationSerializer, PartnerApplicationCreateSerializer
 
 
 class PartnerViewSet(viewsets.ModelViewSet):
@@ -15,10 +15,16 @@ class PartnerViewSet(viewsets.ModelViewSet):
 
 class PartnerApplicationViewSet(viewsets.ModelViewSet):
     queryset = PartnerApplication.objects.all()
-    serializer_class = PartnerApplicationSerializer
 
     def get_permissions(self):
         if self.action == 'create':
             return [AllowAny(), ]
         else:
             return [IsStaff(), ]
+
+    def get_serializer_class(self):
+        print(self.request.data)
+        if self.request.method == 'create':
+            return PartnerApplicationCreateSerializer
+        else:
+            return PartnerApplicationSerializer

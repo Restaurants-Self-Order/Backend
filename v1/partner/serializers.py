@@ -11,9 +11,17 @@ class PartnerSerializer(serializers.ModelSerializer):
         read_only_fields = 'created_at', 'updated_at'
 
 
+class PartnerApplicationCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PartnerApplication
+        fields = ('uuid', 'first_name', 'last_name', 'email', 'phone', 'designation', 'detailed_address', 'state', 'city', 'country', 'shop_name', 'number_of_branches', 'cusine', 'created_at', 'updated_at')
+        read_only_fields = 'created_at', 'updated_at'
+
+
 class PartnerApplicationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PartnerApplication
-        fields = ('uuid','first_name', 'last_name', 'email', 'phone', 'designation', 'detailed_address', 'state', 'city', 'country', 'shop_name', 'number_of_branches', 'cusine', 'status', 'created_at', 'updated_at')
+        fields = ('uuid', 'first_name', 'last_name', 'email', 'phone', 'designation', 'detailed_address', 'state', 'city', 'country', 'shop_name', 'status', 'number_of_branches', 'cusine', 'created_at', 'updated_at')
         read_only_fields = 'created_at', 'updated_at'
