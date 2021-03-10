@@ -1,7 +1,9 @@
 
 from django.contrib import admin
 from django.urls import path, include
+
 from rest_framework.routers import DefaultRouter
+
 from v1.shop.urls import router as shop_router
 from v1.category.urls import router as category_router
 from v1.partner.urls import router as partner_router
