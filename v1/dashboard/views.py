@@ -32,7 +32,7 @@ def displayStatus(request):
     pendingApps = PartnerApplication.objects.filter(status=Pending).count()
 
 # weekly report graph
-def weeklyReport(request):
+def weeklyReportGraph(request):
     today = Mymodel.objects.filter(created_at=datetime.now())
     week = Mymodel.objects.filter(created_at=datetime.now()-timedelta(days=7)).count()
     month = Mymodel.objects.filter(created_at=datetime.now()-timedelta(days=30)).count()
