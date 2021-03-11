@@ -13,7 +13,7 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
 
-
+# List Of all cusines
 class CusineViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cusine.objects.all()
     serializer_class = CusineSerializer

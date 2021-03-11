@@ -26,13 +26,14 @@ class ShopSerializer(serializers.ModelSerializer):
         fields = ('uuid', 'name', 'image', 'shop')
 
 
+# to register partner, filter shop, shopbranch items
 class CountrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Country
         fields = ('__all__')
 
-
+#  to register partner, filter shop
 class CusineSerializer(serializers.ModelSerializer):
 
     class Meta:

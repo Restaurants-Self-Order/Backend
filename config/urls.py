@@ -9,7 +9,9 @@ from v1.item.urls import router as item_router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Api for signup, login
     path('auth/', include('djoser.urls')),
+    # Api for Account activation
     path('auth/', include('v1.third_party.rest_framework_simplejwt.urls')),
 ]
 

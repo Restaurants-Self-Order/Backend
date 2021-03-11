@@ -6,13 +6,14 @@ from v1.third_party.rest_framework.permissions import IsStaff
 from .models import Partner, PartnerApplication
 from .serializers import PartnerSerializer, PartnerApplicationSerializer, PartnerApplicationCreateSerializer
 
-
+# create, list, details, update and delete Partner
 class PartnerViewSet(viewsets.ModelViewSet):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
     permission_classes = [IsStaff]
 
 
+# create, list, details, update and delete appliaction form
 class PartnerApplicationViewSet(viewsets.ModelViewSet):
     queryset = PartnerApplication.objects.all()
 
