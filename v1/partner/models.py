@@ -3,7 +3,6 @@ import uuid
 from django.db import models
 from v1.shop.models import Country, Cusine
 
-
 # Partner Application model
 class PartnerApplication(models.Model):
 
@@ -63,3 +62,4 @@ class Partner(models.Model):
 
     def __str__(self):
         return self.name
+

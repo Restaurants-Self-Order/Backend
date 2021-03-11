@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'v1.item',
     'v1.category',
     'v1.partner',
+    'v1.dashboard',
 ]
 
 SITE_ID = 1
