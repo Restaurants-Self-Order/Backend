@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.utils import timezone
+from django.db.models import Count
 
 # python imports
 from datetime import datetime, timedelta, timezone, date
@@ -33,16 +34,27 @@ def displayStatus(request):
 
 # weekly report graph
 def weeklyReportGraph(request):
-    today = Mymodel.objects.filter(created_at=datetime.now())
-    week = Mymodel.objects.filter(created_at=datetime.now()-timedelta(days=7)).count()
-    month = Mymodel.objects.filter(created_at=datetime.now()-timedelta(days=30)).count()
+    start_date = PartnerApplication.objects.filter(created_at=datetime.now())
+    end_date = PartnerApplication.objects.filter(created_at=datetime.now()-timedelta(days=7))
+    
+    # weekendData = PartnerApplication.objects.values('uuid').filter(created_at__range=(start_date, end_date)).annotate(count=Count('uuid')).order_by('-created_at')
+    weekendData = PartnerApplication.objects.values('created_at').annotate(number_of_applications=Count('created_at', filter(created_at__range=(start_date, end_date)))).order_by('-created_at')
     
     #graph data
-    labels = []
-    data = []
+    labels = [] #day name
+    appsPerDay = [] #count app based on created_at
 
-    queryset = PartnerApplication.objects.filter(created_at=datetime.now()-timedelta(days=7)).order_by('-created_at')
-    #testing
-    for p in queryset:
-        labels.append(p.object)
-        data.append(p.object)
+    categories = list()
+    survived_series_data = list()
+    not_survived_series_data = list()
+
+    #inserting data into collection
+    for entry in weekendData:
+        labels.append(entry['created_at'])
+        appsPerDay.append(entry['number_of_applications'])
+
+# dont delete these queries
+# queryset = PartnerApplication.objects.raw('SELECT * FROM partner_application')
+# today = Mymodel.objects.filter(created_at=datetime.now())
+# week = Mymodel.objects.filter(created_at=datetime.now()-timedelta(days=7)).count()
+# month = Mymodel.objects.filter(created_at=datetime.now()-timedelta(days=30)).count()
