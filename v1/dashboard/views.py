@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Count
+from django.db.models import Q
+#for sql queries
+from django.db import connection
 
 # python imports
 from datetime import datetime, timedelta, timezone, date
@@ -33,20 +36,30 @@ def displayStatus(request):
     pendingApps = PartnerApplication.objects.filter(status=Pending).count()
 
 # weekly report graph
+
+def dictfetchall(cursor):
+    desc = cursor.description
+    return[
+        dict(zip([col[0] for col in desc], row))
+        for row in cursor.fetchall()
+    ]
+
+# weekly report graph   
 def weeklyReportGraph(request):
+    cursor = connection.cursor()
     start_date = PartnerApplication.objects.filter(created_at=datetime.now())
     end_date = PartnerApplication.objects.filter(created_at=datetime.now()-timedelta(days=7))
     
-    # weekendData = PartnerApplication.objects.values('uuid').filter(created_at__range=(start_date, end_date)).annotate(count=Count('uuid')).order_by('-created_at')
-    weekendData = PartnerApplication.objects.values('created_at').annotate(number_of_applications=Count('created_at', filter(created_at__range=(start_date, end_date)))).order_by('-created_at')
+    # weekendData = PartnerApplication.objects.values('created_at').annotate(number_of_applications=Count('created_at', filter(created_at__range=(start_date, end_date)))).order_by('-created_at')
+    cursor.execute("SELECT COUNT(id),age FROM student_student GROUP BY age ORDER BY COUNT(id) DESC")
+    data = dictfetchall(cursor)
+    print(data)
+    print(connection.queries)
+    return render(request,'output.html',{'data': data})
     
     #graph data
     labels = [] #day name
     appsPerDay = [] #count app based on created_at
-
-    categories = list()
-    survived_series_data = list()
-    not_survived_series_data = list()
 
     #inserting data into collection
     for entry in weekendData:
