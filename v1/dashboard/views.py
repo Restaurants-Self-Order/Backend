@@ -56,12 +56,14 @@ def testoutput(request):
     total_apps_a_day_list = []
     day_name_list =[]
 
+    day_name_list.append(app_dates)
     for app in app_dates:
         access_date=app["created_at__date"]
         datacount = PartnerApplication.objects.filter(created_at__date=access_date).count()
-        total_apps_a_day_list.append(datacount)
+        datadate = PartnerApplication.objects.filter(created_at__date=access_date)
+        total_apps_a_day_list.append({"date":access_date,"count":datacount})
     # print(data)
-    return render(request,'output.html',{'data': total_apps_a_day_list })
+    return render(request,'output.html',{'count': total_apps_a_day_list })
 
 
 
@@ -79,13 +81,15 @@ def weeklyReportGraph(request):
     total_apps_a_day_list = []
     day_name_list =[]
 
+    day_name_list.append(app_dates)
     for app in app_dates:
         access_date=app["created_at__date"]
         datacount = PartnerApplication.objects.filter(created_at__date=access_date).count()
-        total_apps_a_day_list.append(datacount)
+        datadate = PartnerApplication.objects.filter(created_at__date=access_date)
+        total_apps_a_day_list.append({"date":access_date,"count":datacount})
     # print(data)
-    return render(request,'output.html',{'data': total_apps_a_day_list })
-
+    return render(request,'output.html',{'count': total_apps_a_day_list })
+    
 # dont delete these queries
 # now = timezone.now()
 # current_date=datetime.today().strftime("%Y-%m-%d")

@@ -1,0 +1,193 @@
+Database Relations:
+
+Shop -> one to many -> Shop Branch -> One to Many ->Category-> One to Many -> FoodItems
+			
+ShopBranch-> One to Many -> User(Shop-admin/Shop-Manager)
+
+User(Customer)-> One to One-> Cart -> One to Many -> CartItem 
+				|
+				-> Receipt -> One to Many -> ReceiptItems
+
+
+User(Customer)-> One to many -> FavoriteItems -> One to many -> FoodItems
+				|
+				->FavoriteShop ->One to many -> FavoriteBranch
+
+ShopBranch-> One to Many -> BranchReviewRating [pivotTable] <- Many to One <- User(Customer)
+ id:7008                    7008 - 86   4stars comment                     id:86
+
+FoodItem-> One to Many -> ItemReviewRating [pivotTable] <- Many to One <- User(Customer)
+ id:7008                   id:7008 -  id:86  stars:4 comment               id:86
+
+User-> One to One -> Profile
+
+Shop Admin -> CRUD
+Shop-Manager -> POS -> Changes Delivered Status (No to Yes) in the Receipt Column-> delivery_status
+
+....................................................................................................
+Registration: Email, password, country   Default123Password
+
+User_type
+id         name
+1          Customer           See mobile customer view
+2          Shop-Owner         See Mobile employee view, and portal to manage all the branches (shop super admin) Assing employee and branch admin to branchs.
+3	   Branch-Employee    Only mobile employee view
+4          Branch-Admin       See Mobile employee view, and portal to manage assigned branch
+
+mobile-app Customer
+
+Mobile view-> Shop-Employee -> Mobile view
+
+web-portal Shop-Owner<->Branch-Admin -> Access the portal
+
+Permission:
+id       user_type_id        permission
+1        1             	     see items, add to cart, buy
+2        2                   CRUD
+3        3                   view orders, deliver
+
+
+USER
+id         Email                            Password       
+1          customer1@gmail.com              ********      
+2	   customer2@gmail.com              ********      
+3          AdminShopBranch1@gmail.com       ********     
+4          EmployeeShopBranch2@gmail.com     ********       
+5	   AdminShopBranch2@gmail.com       ********       
+4	   ManagerShopBranch2@gmail.com     ********       
+
+
+User_Profile 
+id          user_id        user_type_id          country
+1            1             1                     india
+2            2             1                     india
+3            2             2                     Nepal
+
+Go to UserProfile -> Select Become A Seller -> It will open a form with (registrarName, registrarAddress, ShopName, ShopLocation, NumberOfBranch, City, Country)
+On submit it will create a shop, Shop_Branch and User_Brach. (Need a approval)
+
+Once a shop is created Shop-admin(the shop opener) can add more branch and more Shop-admin & Shop-Manager and assign to branch.
+
+If he wants to add more branch: Click on Add New Branch->It will open a form with (ShopLocation, City, Country, Shop_Type)->Here shop_id will come from request.user.shop and after saving the shop_branch it will generate a user_branch with request.user.id.
+
+If he wants to add more Shop-admin and Shop-Manager: Click on Add New User->It will open a form with (Role, email, password).
+On submit it will create a new user. 
+To connect that user with a branch: Click on assign Branch->It will open a form with (registed_email, shop_branch).
+Query by request.registed_email to find user_id and create User_Branch with user_id, request.shop_branch
+
+SHOP (One to Many User)
+id          user_id     shopName      shop_type   
+1             3         BDCafe        cafe           
+2             3         KFC           Restaurant
+3             3         NPCafe        cafe  
+
+SHOP_BRANCH (One to Many User)
+id     shop_id           location            City            State          Country         shop_type     Opening hours    Closing hours     Multiple employees for branch    role
+1        1               Uttara              Dhaka                          Bangladesh      cafe                                                                   
+2        2               Khulna              kathmunda                      Napal           Restaurant                                                                        
+3        3               saddsd              adsd                           Napal           cafe                  
+4        3               sads                adsd                           Napal           cafe
+ 
+USER_BRANCH (One to Many User)         select shop where name is NPCafe
+id      branch_id      user_id         select shop_branch where id is 3
+1        1              3     
+2        1              4
+3        2              3
+4        2              6 
+
+Cuisine
+Id             shop_id                name         
+
+
+Category
+id        shop_branch_id         name
+1              1                 Fastfood 
+2	       1                 Drinks 
+3              1                 Vagitable
+4              2                 Pizza
+
+Item (In frontend add Search feature)
+id    name                 price     Currency_id	description           prepare_time      Category_id  
+1     French Toast Slam    50        TNB                French Toast Slam     10 mins           1
+2     Pepsi                20        TNB                                                        2
+
+Customiztion_Group (Item has Many Item_Sub_Category)
+ID          Item_ID                 Name                                         Type
+1            1                      Additional Topping                           optional (radio btn)
+2            1                      Choose Your Eggs                             Required (checkbox)
+3            1                      Choose Your Bacon & Sausage                  Required (checkbox)
+4            1                      Breakfast Beverage Add-on                    optional (radio btn)
+
+Customization_Items ( Item_Sub_Category Has Many Item_Sub_Category_Product)
+ID           Item_Sub_Category_ID                Name                                 Price     Item_id      Type
+1            1                                   Stawberry Topping                    1.09                   Paid
+
+2            2                                   Scrambled
+3            2                                   Scrambled with cheese                1.49
+
+4            3                                   2 Bacon slices+2 sausage links
+5            3                                   4 Bacon slices
+
+6            4                                   Signature Diner Blend Cofee          3.99
+7            4                                   Minute Maid Orange Juice             5.49
+
+8            4                                   Stawberry Topping                    0.00        2         Free
+
+
+if Customization_Items type is free and Item_id === id inside item put 0 inside price of Customization_Items
+
+
+Group_items
+ID        Group_id        Name      Price 
+1          1              Cocacola  Null
+2          1              Sprite    20 TNB
+
+Bundle_packege
+id        name                price   
+1         RiceWIthBear        200    
+2         Morning Breakfast   150
+
+Packege_Items
+id         Bundle_packege_id     Item_id
+1            1                    2
+2            1                    1
+
+...................................................................................................................
+UI/UX Flow Chart:
+
+UserSignUp-> Email, Password
+
+ShopSignUp-> registrarName, registrarAddress, ShopName, ShopAddress, NumberOfBranch, City, Country -> After Manual Verification-> Open Shop Branches (Number of Branches) -> Register User - Send Signup Link Email to ShopAdmin ShopManager
+
+ we shall create a new user_type -> Branch-admin
+ and the Shop-Owner will be able to assign Branch-admin and Branch-Employee users to specific branch
+ with keeping in mind that each Branch-Employee and be assigned to ONLY one branch and a branch can have multiple Branch-admin
+ and Branch-admin can manage multiple branches
+ 1 Customer See mobile customer view
+ 2 Shop-Owner See Mobile employee view, and portal to manage all the branches (shop super admin) Assign employee and branch admin  to branches.
+ 3 Branch-Employee Only mobile employee view
+ 4 Branch-admin See Mobile employee view, and portal to manage assigned branch
+
+.............................
+
+
+pizza   -------------------- 200 TNB      1. We need to add the new price in item table on addition field like Random_Price = 230 TNB
+
+choose Ingredents from here :
+
+1 mashrooms
+2 cheese
+
+choose drinks : (Choose one)
+
+1 pepsi
+2 7up
+
+You can also add
+
+1 extra mashroom  ----  20 TNB
+2 extra cheese    ----- 10 TNB
+
+choose drinks
+
+1 Bear   ------ 80 TNB
