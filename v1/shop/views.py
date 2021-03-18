@@ -3,10 +3,14 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
 
 # Serializer Class imports
-from .serializers import ShopSerializer, ShopBranchSerializer, CountrySerializer, CusineSerializer
+from .serializers import ShopTypeSerializer, ShopSerializer, ShopBranchSerializer, CountrySerializer, CusineSerializer
 from .models import Shop, ShopBranch, Country, Cusine
 from .permissions import ShopEditDelete, ShopBranchCreate, ShopBranchUpdate, ShopBranchDelete
 
+# List Of shop type
+class ShopTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ShopType.objects.all()
+    serializer_class = ShopTypeSerializer
 
 # List Of all countries
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
