@@ -1,0 +1,89 @@
+1. Create Api for appliaction form (Fillable inputs [first_name, last_name, email, phone, designation, detailed_address, state, city, country, shop_name, number_of_branches, cusine])
+
+	POST: /partner-application
+
+2. Create Api for signup, login, password reset.
+
+	->Signup (Fillable inputs [email, password, re_password])
+		POST: /auth/users/
+
+	->Login (Fillable inputs [email, password])
+		POST: /auth/jwt/create/
+
+	->Account activation (in email there will be and activation link like /activate/{uid}/{token})
+		(Fillable inputs [uid, token] from email address)
+		POST: /auth/users/activation/
+
+	->Password reset
+
+
+3. Staff Dashboard
+	->Create Api which will return total number of applications, number of partnership on process,  number of active partners, number of rejected applications.
+	->Create Api which will return latest 5 applications.
+	->Create Api which will return the details of an application
+	->Create Api which will return total number of applications of each day to generate graph. (weekly and monthly report Graph)
+
+4. ApplicationList menu
+	->Create Api which will return list of all applications.
+		GET: /partner-application
+	->Create Api which will return details of an application.
+		GET: /partner-application/uuid
+	->Create Api to change the status of an application.
+		PATCH: /partner-application/uuid
+	->Create Api to update an application details
+		PUT: /partner-application/uuid
+	->Create Api to delete an application.
+		DETELE: /partner-application/uuid
+
+5. PartnerList menu
+	->Create Api to add new partner (Fillable inputs [first_name, last_name, email, phone, detailed_address, state, city, country, shop_name])
+		POST: /partner
+	->Create Api which will return list of partners
+		GET: /partner
+	->Create Api which will return details of a partner
+		GET: /partner/uuid
+	->Create Api to update a partner details
+		PUT: /partner/uuid
+	->Create Api to delete a partner.
+		DELETE: /partner/uuid
+
+6. Country menu
+	->Create Api which will return list of countries
+		GET: /country
+
+7. Cusine menu
+	->Create Api which will return list of cusines.
+		GET: /cusine
+
+8. ShopType menu
+	->Create Api to return list of ShopType
+		GET: /shop_type
+
+9. ShopList menu
+	->Create Api which will query partner based on query parameter and return the query data.
+	->Create Api to add new Shop (Fillable inputs [shop_type, name, owner, image]).
+	->Create Api to return list of Shop.
+	->Create Api to update a shop details.
+	->Create Api to delete a shop
+
+10. Category menu
+	->Create Api to add new category. (Fillable inputs [name])
+	->Create Api to return list of categories.
+	->Create Api to delete
+
+11. ItemMenu menu
+	->Create Api to add new ItemMenu. (Fillable inputs [name])
+	->Create Api to return list of ItemMenu.
+	->Create Api to delete
+
+
+12. ShopBranch menu
+	->Create Api which will query shop based on query parameter and return the query data.
+	->Create Api which will query menu based on query parameter and return the query data.
+	->Create Api which will query category based on query parameter and return the query data.
+	->Create Api to add new ShopBranch (Fillable inputs [shop(Use select2), menu(Use select2), category(Use select2), title(Label will be Branch Name), street_address, region, city, postal_code, state, country,  latitude, longitude(use map), eta_rang, description, opening_time, closing_time])
+	->Create Api to return list of ShopBranch.
+	->Create Api to return the details of a ShopBranch.
+	->Create Api to update a ShopBranch details.
+	->Create Api to delete a ShopBranch
+
